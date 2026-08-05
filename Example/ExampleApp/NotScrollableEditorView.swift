@@ -14,7 +14,7 @@ struct NotScrollableEditorView: View {
 
     var body: some View {
         ScrollView {
-            RichHTMLEditor(html: $html, textAttributes: textAttributes)
+            RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
         }
     }
 }

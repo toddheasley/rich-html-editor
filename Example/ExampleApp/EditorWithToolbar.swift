@@ -70,7 +70,7 @@ struct EditorWithToolbar: View {
     @State private var textAttributes = TextAttributes()
 
     var body: some View {
-        RichHTMLEditor(html: $html, textAttributes: textAttributes)
+        RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
             #if canImport(UIKit)
         .editorScrollable(true)
             #endif
