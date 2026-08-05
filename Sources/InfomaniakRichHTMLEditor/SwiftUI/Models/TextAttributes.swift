@@ -12,30 +12,32 @@
 //  under the License.
 
 import SwiftUI
+import Observation
 
 /// This object contains the current state of the text selected or at the insertion point.
 ///
 /// The properties are read-only and are automatically updated by the editor.
 /// If you want to update the style, you should use the available functions.
 @MainActor
-public final class TextAttributes: ObservableObject {
-    @Published public private(set) var hasBold = false
-    @Published public private(set) var hasItalic = false
-    @Published public private(set) var hasUnderline = false
-    @Published public private(set) var hasStrikethrough = false
-    @Published public private(set) var hasSubscript = false
-    @Published public private(set) var hasSuperscript = false
-    @Published public private(set) var hasOrderedList = false
-    @Published public private(set) var hasUnorderedList = false
+@Observable
+public final class TextAttributes {
+    public private(set) var hasBold = false
+    public private(set) var hasItalic = false
+    public private(set) var hasUnderline = false
+    public private(set) var hasStrikethrough = false
+    public private(set) var hasSubscript = false
+    public private(set) var hasSuperscript = false
+    public private(set) var hasOrderedList = false
+    public private(set) var hasUnorderedList = false
 
-    @Published public private(set) var hasLink = false
-    @Published public private(set) var textJustification: TextJustification?
+    public private(set) var hasLink = false
+    public private(set) var textJustification: TextJustification?
 
-    @Published public private(set) var fontName = ""
-    @Published public private(set) var fontSize: Int?
+    public private(set) var fontName = ""
+    public private(set) var fontSize: Int?
 
-    @Published public private(set) var foregroundColor: Color?
-    @Published public private(set) var backgroundColor: Color?
+    public private(set) var foregroundColor: Color?
+    public private(set) var backgroundColor: Color?
 
     weak var editor: RichHTMLEditorView?
 
