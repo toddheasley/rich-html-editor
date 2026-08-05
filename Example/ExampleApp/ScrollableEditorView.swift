@@ -16,7 +16,7 @@ import SwiftUI
 
 struct ScrollableEditorView: View {
     @State private var html = "<h1>ScrollableEditorView</h1><p>This editor is scrollable.</p>"
-    @StateObject private var textAttributes = TextAttributes()
+    @State private var textAttributes = TextAttributes()
 
     var body: some View {
         RichHTMLEditor(html: $html, textAttributes: textAttributes)

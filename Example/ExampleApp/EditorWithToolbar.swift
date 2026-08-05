@@ -11,7 +11,6 @@
 //  specific language governing permissions and limitations
 //  under the License.
 
-import Combine
 import InfomaniakRichHTMLEditor
 import SwiftUI
 
@@ -27,28 +26,16 @@ final class EditorToolbar: UIView {
 
     let textAttributes: TextAttributes
 
-    private var cancellables = Set<AnyCancellable>()
-
     init(textAttributes: TextAttributes = TextAttributes()) {
         self.textAttributes = textAttributes
 
         super.init(frame: .zero)
 
         setupToolbar()
-        bindTextAttributes()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    private func bindTextAttributes() {
-        textAttributes.$hasBold
-            .receive(on: RunLoop.main)
-            .sink { [weak self] hasBold in
-                self?.boldButton.isSelected = hasBold
-            }
-            .store(in: &cancellables)
     }
 
     private func setupToolbar() {
@@ -63,6 +50,15 @@ final class EditorToolbar: UIView {
         ])
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        boldButton.isSelected = textAttributes.hasBold
+    }
+
+    func refresh() {
+        boldButton.isSelected = textAttributes.hasBold
+    }
+
     @objc private func toggleBold() {
         textAttributes.bold()
     }
@@ -71,7 +67,7 @@ final class EditorToolbar: UIView {
 
 struct EditorWithToolbar: View {
     @State private var html = "<h1>EditorWithToolbar</h1><p>This editor <strong>has a toolbar</strong>. Focus the editor to reveal it.</p>"
-    @StateObject private var textAttributes = TextAttributes()
+    @State private var textAttributes = TextAttributes()
 
     var body: some View {
         RichHTMLEditor(html: $html, textAttributes: textAttributes)

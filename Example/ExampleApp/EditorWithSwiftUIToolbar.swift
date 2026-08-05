@@ -13,9 +13,10 @@
 
 import InfomaniakRichHTMLEditor
 import SwiftUI
+import Observation
 
 struct EditorSwiftUIToolbarContent: View {
-    @ObservedObject var textAttributes: TextAttributes
+    @Bindable var textAttributes: TextAttributes
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -118,17 +119,18 @@ final class EditorSwiftUIToolbar: UIView {
 // MARK: -
 
 struct EditorWithSwiftUIToolbar: View {
+    @State private var textAttributes = TextAttributes()
     @State private var html = String.sampleHTML
-    @StateObject private var textAttributes = TextAttributes()
 
     var body: some View {
-        RichHTMLEditor(html: $html, textAttributes: textAttributes)
-            #if canImport(UIKit)
-        .editorScrollable(true)
-            #endif
-            #if os(iOS)
-        .editorInputAccessoryView(EditorSwiftUIToolbar(textAttributes: textAttributes))
-        #endif
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
+                    .padding()
+            }
+            
+            EditorSwiftUIToolbarContent(textAttributes: textAttributes)
+        }
     }
 }
 
