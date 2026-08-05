@@ -20,9 +20,6 @@ struct ScrollableEditorView: View {
 
     var body: some View {
         RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
-            #if canImport(UIKit)
-        .editorScrollable(true)
-            #endif
     }
 }
 

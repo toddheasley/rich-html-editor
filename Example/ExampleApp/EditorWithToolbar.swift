@@ -71,11 +71,8 @@ struct EditorWithToolbar: View {
 
     var body: some View {
         RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
-            #if canImport(UIKit)
-        .editorScrollable(true)
-            #endif
-            #if os(iOS)
-        .editorInputAccessoryView(EditorToolbar(textAttributes: textAttributes))
+        #if os(iOS)
+            .editorInputAccessoryView(EditorToolbar(textAttributes: textAttributes))
         #endif
     }
 }
