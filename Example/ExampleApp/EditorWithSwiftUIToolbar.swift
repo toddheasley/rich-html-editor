@@ -103,7 +103,7 @@ struct EditorWithSwiftUIToolbar: View {
                 RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
                     .padding()
             }
-            
+
             EditorSwiftUIToolbarContent(textAttributes: textAttributes)
         }
     }
