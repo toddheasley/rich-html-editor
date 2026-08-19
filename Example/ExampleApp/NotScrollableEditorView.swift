@@ -10,11 +10,11 @@ import SwiftUI
 
 struct NotScrollableEditorView: View {
     @State private var html = "<h1>NotScrollableEditorView</h1><p>This editor is not scrollable and will expand to fit its content.</p>"
-    @StateObject private var textAttributes = TextAttributes()
+    @State private var textAttributes = TextAttributes()
 
     var body: some View {
         ScrollView {
-            RichHTMLEditor(html: $html, textAttributes: textAttributes)
+            RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
         }
     }
 }

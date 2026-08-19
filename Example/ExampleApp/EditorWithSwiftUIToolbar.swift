@@ -13,9 +13,10 @@
 
 import InfomaniakRichHTMLEditor
 import SwiftUI
+import Observation
 
 struct EditorSwiftUIToolbarContent: View {
-    @ObservedObject var textAttributes: TextAttributes
+    @Bindable var textAttributes: TextAttributes
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -90,45 +91,21 @@ struct EditorToolbarButton: View {
     }
 }
 
-// MARK: - UIView wrapper for input accessory
-#if canImport(UIKit)
-final class EditorSwiftUIToolbar: UIView {
-    private let hostingController: UIHostingController<EditorSwiftUIToolbarContent>
-
-    override var intrinsicContentSize: CGSize {
-        CGSize(width: UIView.noIntrinsicMetric, height: 44)
-    }
-
-    init(textAttributes: TextAttributes) {
-        hostingController = UIHostingController(rootView: EditorSwiftUIToolbarContent(textAttributes: textAttributes))
-        hostingController.view.backgroundColor = .clear
-        hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        super.init(frame: .zero)
-        addSubview(hostingController.view)
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-#endif
-
 // MARK: -
 
 struct EditorWithSwiftUIToolbar: View {
+    @State private var textAttributes = TextAttributes()
     @State private var html = String.sampleHTML
-    @StateObject private var textAttributes = TextAttributes()
 
     var body: some View {
-        RichHTMLEditor(html: $html, textAttributes: textAttributes)
-            #if canImport(UIKit)
-        .editorScrollable(true)
-            #endif
-            #if os(iOS)
-        .editorInputAccessoryView(EditorSwiftUIToolbar(textAttributes: textAttributes))
-        #endif
+        ZStack(alignment: .bottom) {
+            ScrollView {
+                RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
+                    .padding()
+            }
+
+            EditorSwiftUIToolbarContent(textAttributes: textAttributes)
+        }
     }
 }
 

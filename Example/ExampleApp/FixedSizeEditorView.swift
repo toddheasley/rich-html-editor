@@ -10,13 +10,10 @@ import SwiftUI
 
 struct FixedSizeEditorView: View {
     @State private var html = "<h1>FixedSizeEditorView</h1><p>This editor has a fixed height and is scrollable.</p>"
-    @StateObject private var textAttributes = TextAttributes()
+    @State private var textAttributes = TextAttributes()
 
     var body: some View {
-        RichHTMLEditor(html: $html, textAttributes: textAttributes)
-            #if canImport(UIKit)
-        .editorScrollable(true)
-            #endif
+        RichHTMLEditor(html: $html, editable: true, textAttributes: textAttributes)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.blue, lineWidth: 1)

@@ -38,7 +38,7 @@ public struct RichHTMLEditor: PlateformViewRepresentable {
     @State public var editable: Bool
     public var selection: Binding<String>?
 
-    @ObservedObject public var textAttributes: TextAttributes
+    public var textAttributes: TextAttributes
     public let spellCheckEnabled: Bool
     public let autoCorrectEnabled: Bool
 
@@ -49,7 +49,7 @@ public struct RichHTMLEditor: PlateformViewRepresentable {
         _html = html
         self.selection = selection
         self.editable = editable
-        _textAttributes = ObservedObject(wrappedValue: textAttributes)
+        self.textAttributes = textAttributes
         self.spellCheckEnabled = spellCheckEnabled
         self.autoCorrectEnabled = autoCorrectEnabled
     }
